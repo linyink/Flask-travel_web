@@ -1,0 +1,55 @@
+<!--整体思路应该是：
+    点击话题，会查询所有话题记录并展示。
+    点击发布话题，会将话题发布，并跳转到话题细节界面-->
+
+{% extends 'base.html' %}
+
+{% block title %}所有话题-{% endblock %}
+
+{% block head %}
+     <link rel="stylesheet" href="../static/css/login-register.css">
+     <link rel="stylesheet" href="../static/css/myself.css">
+{% endblock %}
+
+{% block main %}
+<div style="margin: 30px">
+    <hr>
+</div>
+{% for topic in topics %}
+
+<!--这个zhumain无法使用，很多类都这样，能索引到但无法使用-->
+<div class=" zhumain row " style="background: floralwhite; width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+    " >
+    <ul><!--出错，说没有给topic_id的值，原因在于没有topics的值，也就是说search()出问题-->
+            <!--去除无序列表的小黑点-->
+            <li style="list-style-type:none">
+
+                <!--bootstrap的自适应栅格-->
+                {#需要把img专门放在一个标签下，不然内容无法加载出来#}
+                <div class="topic-group avatar-group col " >
+                     <img src="../static/img/touxiang.jpg" alt="404"
+                          style="width: 38px; height: 38px;" class="avatar">
+                    </div>
+
+                    {#一开始url_for()一直说找不到文件，是要在设置里面把模板语言设置成jinjia2#}
+                    <p class="topic-title"><a href="{{ url_for('topic_details',topic_id=topic.id)}}">
+                        {{ topic.title }}</a></p>
+                    <p class="topic-content">{{ topic.content }}</p>
+                    <div class="topic-info">
+                        <span class="topic-author">用户id:{{ topic.author.username }}</span>
+                        <br>
+                        <span class="topic-time">发布时间:{{ topic.create_time }}</span>
+
+                    </div>
+
+            </li>
+
+    </ul>
+
+    </div>
+ {% endfor %}
+                        {#<hr style="background-color: orangered;height: 1px ;border: none"/>#}
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+{%block title%}登录{% endblock%}
+{% block head %}
+    <link rel="stylesheet" href="../static/css/login-register.css">
+    <link rel="stylesheet" href="../static/css/myself.css">
+{% endblock %}
+{% block main %}
+<!--有时，引用外部的css文件总是用不了，这时，你需要先把外部的css文件通过link的方式先引入进来-->
+<!--现在出现了一个问题：登录这个标题会被导航栏给盖住，但导航栏的无缝样式需要在index页面用到，
+所以我需要在其他页面单独引用，增加高度-->
+<div class="gao-du">
+    <h3 class="page-title" >登录</h3>
+    <form action="" method="POST">
+        <div class='form-container'>
+            <div class='form-group'>
+                <input type="text" class="form-control" placeholder="手机号码"
+                        name="telephone">
+            </div>
+             <div class='form-group'>
+                <input type="password" class="form-control" placeholder="密码"
+                        name="password">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block">登录</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

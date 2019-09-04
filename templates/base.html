@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--一开始始终找不到资源，后来发现bootstrap文件的目录是要从根目录开始的../-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{%block title%}{%endblock%}-如画旅游</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+{% block head %}{% endblock %}
+</head>
+<body>
+<script src="../static/js/jQuery.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<!--这是导航条,每个页面都需要的-->
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Lin's Web</a>
+
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <!--如果加上封号class=";"，就会空出一行-->
+            <form class="navbar-form navbar-left" action="{{ url_for('search') }}" method="get">
+                <div class="form-group">
+                    <!--注意这里将name="q",在search()方法中会用到-->
+                    <input name="q" type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+              {% if user %}
+                  <li><a href="#">{{ user.username }}</a></li>
+                  {#url_for直接对应视图函数名#}
+                  <li><a href="{{ url_for('logout') }}">注销</a></li>
+                  <li><a href="{{ url_for('publish_topic') }}">发布话题</a></li>
+              {% else %}
+                  <li><a href="{{ url_for('login') }}">登录</a></li>
+                  <li><a href="{{ url_for('register') }}">注册</a></li>
+              {% endif %}
+                <li><a href="{{ url_for('all_topic') }}">话题</a></li>
+                <li><a href="{{url_for('joinUs')}}">加入我们</a></li>
+
+    {#    有些时候会出bug,只有在主页的时候才能点击下拉菜单，在其他页面就点击不了
+            <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人信息 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <!--url_for('视图函数名称')-->
+                            <li><a href="{{ url_for('all_topic') }}">话题</a></li>
+                            <li><a href="{{ url_for('publish_topic') }}">发布话题</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ url_for('logout') }}">注销</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">商业推广</a></li>
+                    </ul>
+                </li>#}
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+ <div class='main'>
+     {% block main %}{% endblock %}
+ </div>
+<!--闪现消息-->
+<div class="set_flash">
+<p></p>
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+<p></p>
+</div>
+</body>
+</html>

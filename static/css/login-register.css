@@ -1,0 +1,11 @@
+.form-container{
+    width: 300px;
+    margin: 0 auto;/*表示上下距离为0，左右居中*/
+}
+.gao-du{
+    margin: 60px auto;
+}
+
+.heart-right{
+    float: right;
+}

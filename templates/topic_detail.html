@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+<!--这个文件已经受损了-->
+{#经过无数次的检验，发现每次把一个好的html变成topic_detail的接收者时，就会出现无法索引botstrap的情况
+这是和传过来的值有关的#}
+{% block title %}话题细节-{% endblock %}
+
+{% block head %}
+     <link rel="stylesheet" href="../static/css/login-register.css"/>
+    <link rel="stylesheet" href="../static/css/myself.css"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+{% endblock %}
+
+{% block main %}
+    <script src="../static/js/jQuery.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+<!--<div class="gao-du topic-group avatar-group col">--><!--topic说没有被定义-->
+    <h3 class="page-title">{{ topic.title }}</h3>
+    <p class="topic-info">
+    {#span是不会换行的#}
+        <span>作者： {{ topic.author.username }}</span>
+        <span>时间： {{ topic.create_time }}</span>
+    </p>
+    <hr/>
+    <p class="topic-content">{{ topic.content }}</p>
+    <hr/>
+    <h4>评论： （0）</h4>
+    <form action="{{ url_for('add_answer') }}" method="post">
+        <div class="form-group">
+            <input name="answer_content" type="text" class="from-control" placeholder="请填写评论">
+            <input type="hidden" name="topic_id" value="{{ topic.id }}">
+        </div>
+        <div class="form-group" style="text-align: right;">
+            <button class="btn btn-primary">立即评论</button>
+        </div>
+    </form>
+    <ul class="answer-list">
+        {% for answer in topic.answers %}
+            <li>
+                <div class="user-info">
+                    <img src="../static/img/touxiang.jpg" alt="404"
+                            class="avatar">
+
+                    <span class="username">{{ answer.author.username }}</span>
+                    <span class="create-time">{{ answer.create_time }}</span>
+                </div>
+                <p class="answer-content">{{ answer.content }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+  <!--  </div>-->
+{% endblock %}
